@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OptimizedVestingSelling.ExexutionMethods;
+using OptimizedVestingSelling.Factories;
+using OptimizedVestingSelling.Settings;
 using Serilog;
 using System;
 using System.IO;
@@ -73,11 +76,18 @@ namespace ApplicationTemplate
             services.AddSingleton(Configuration);
             services.AddOptions();
 
+            services.AddSingleton(services);
+
             // Register the services
-            // services.AddTransient<IExampleService, ExampleService>();
+            services.AddTransient<IWeb3Factory, Web3Factory>();
+            services.AddTransient<IPeriodExecutionMethod, PeriodExecutionMethod>();
+            services.AddTransient<IAmountExecutionMethod, AmountExecutionMethod>();
+            services.AddTransient<IExecutionMethodFactory, ExecutionMethodFactory>();
 
             // Configure EmailSettings so IOption<EmailSettings> can be injected 
-            // services.Configure<ExampleSettings>(Configuration.GetSection("ExampleSettings"));
+            services.Configure<WalletSettings>(Configuration.GetSection("WalletSettings"));
+            services.Configure<NetworkSettings>(Configuration.GetSection("NetworkSettings"));
+            services.Configure<ExecutionSettings>(Configuration.GetSection("ExecutionSettings"));
 
             // Register the actual application entry point
             services.AddSingleton<App>();

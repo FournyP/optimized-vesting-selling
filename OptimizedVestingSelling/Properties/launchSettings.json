@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ApplicationTemplate": {
+    "OptimizedVestingSelling": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
