@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using OptimizedVestingSelling.ExexutionMethods;
 using OptimizedVestingSelling.Factories;
+using OptimizedVestingSelling.Services;
 using OptimizedVestingSelling.Settings;
 using Serilog;
 using System;
@@ -83,11 +84,13 @@ namespace ApplicationTemplate
             services.AddTransient<IPeriodExecutionMethod, PeriodExecutionMethod>();
             services.AddTransient<IAmountExecutionMethod, AmountExecutionMethod>();
             services.AddTransient<IExecutionMethodFactory, ExecutionMethodFactory>();
+            services.AddTransient<IEthereumUniswapGasTrackerFetcher, EthereumUniswapGasTrackerFetcher>();
 
             // Configure EmailSettings so IOption<EmailSettings> can be injected 
             services.Configure<WalletSettings>(Configuration.GetSection("WalletSettings"));
             services.Configure<NetworkSettings>(Configuration.GetSection("NetworkSettings"));
             services.Configure<ExecutionSettings>(Configuration.GetSection("ExecutionSettings"));
+            services.Configure<GasTrackerSettings>(Configuration.GetSection("GasTrackerSettings"));
 
             // Register the actual application entry point
             services.AddSingleton<App>();
